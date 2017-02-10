@@ -51,11 +51,11 @@ function getVovanStatus(){
     vovanStatus = 1;
     }
     else {
-    	if(hoursSinceCycleStart>12 && hoursSinceCycleStart<36){
+    	if(hoursSinceCycleStart>=12 && hoursSinceCycleStart<36){
     	vovanStatus = 2;
     	}
         else {
-        	if(hoursSinceCycleStart>36 && hoursSinceCycleStart < 48){ 
+        	if(hoursSinceCycleStart>=36 && hoursSinceCycleStart < 48){ 
             vovanStatus = 3;
             }
             else {
@@ -77,7 +77,7 @@ function showVovanStatus(){
         subTitle.innerHTML = "и у него -100% зарплаты";
         getTimeButton.classList.remove("button-caution");
         getTimeButton.classList.add("button-action");
-        getTimeButton.innerHTML="Узнай, когда вован работизируется ( ︶︿︶)";
+        getTimeButton.innerHTML="Узнай, когда вован вернется ( ͡° ͜ʖ ͡°)";
         break;
         
         case 2:
@@ -98,8 +98,8 @@ function showVovanStatus(){
         title.style.color = "red";
         title.innerHTML = "Вован сейчас на работе";
         subTitle.innerHTML = "вкалывает как средневековый мужик";
-        getTimeButton.classList.remove("button-action");
-        getTimeButton.classList.add("button-caution");
+        getTimeButton.classList.remove("button-caution");
+        getTimeButton.classList.add("button-action");
         getTimeButton.innerHTML="Узнай, когда вован вернется ( ͡° ͜ʖ ͡°)";
         break;
         
