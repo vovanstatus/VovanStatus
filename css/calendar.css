@@ -1,0 +1,184 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+body {
+  line-height: 1;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+blockquote, q {
+  quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+
+/*
+ * Copyright (c) 2012-2013 Thibaut Courouble
+ * http://www.cssflow.com
+ *
+ * Licensed under the MIT License:
+ * http://www.opensource.org/licenses/mit-license.php
+ */
+body {
+
+}
+
+.container {
+  margin: 50px auto;
+  width: 640px;
+}
+.container .cal {
+  margin: 0 auto;
+}
+
+.cal {
+  font: 13px/20px 'Lucida Grande', Tahoma, Verdana, sans-serif;
+  display: block;
+  width: 356px;
+  -webkit-box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+}
+.cal a {
+  text-decoration: none;
+}
+.cal caption {
+  display: block;
+  line-height: 32px;
+  font-weight: bold;
+  color: #444444;
+  text-align: center;
+  text-shadow: 1 1px black;
+  background: #333;
+  background-color: #ffffff;
+  background: rgba(FF, FF, FF, 0.35);
+  border-top: 1px solid #333;
+  border-bottom: 1px solid #313131;
+  -webkit-box-shadow: inset 0 2px rgba(255, 255, 255, 0.04);
+  box-shadow: inset 0 2px rgba(255, 255, 255, 0.04);
+}
+.cal caption a {
+  display: block;
+  line-height: 32px;
+  padding: 0 10px;
+  font-size: 15px;
+  color: #000000;
+}
+.cal caption a:hover {
+  color: white;
+}
+.cal caption .prev {
+  float: left;
+}
+.cal caption .next {
+  float: right;
+}
+.cal th, .cal td {
+  width: 50px;
+  text-align: center;
+  text-shadow: 0 1px rgba(255, 255, 255, 0.8);
+}
+.cal th:first-child, .cal td:first-child {
+  border-left: 0;
+}
+.cal th {
+  line-height: 20px;
+  font-size: 12px;
+  color: #696969;
+  text-transform: uppercase;
+  background: #FFFFFF;
+  border-left: 1px solid #f3f3f3;
+}
+.cal td {
+  font-size: 14px;
+  font-weight: bold;
+  border-top: 1px solid #c2c2c2;
+  border-left: 1px solid #c2c2c2;
+}
+.cal td a {
+  clear: both;
+  display: block;
+  position: relative;
+  width: 50px;
+  line-height: 40px;
+  color: #666;
+  background-color: #FFFFFF;
+
+}
+.cal td.off a, .cal td.red a {
+  background: #f3f3f3;
+}
+
+.cal td a:hover {
+	cursor: normal;
+	background: orange;
+}
+
+.cal td.off a {
+  
+  color: #b3b3b3;
+  opacity: 0.3;
+}
+
+.cal td.buhaem a {
+ background-color: #52ee11;
+}
+
+.cal td.off a:hover, .cal td.buhaem a:hover {
+   background-color: orange;
+}
+
+.cal td.active a, .cal td a:active {
+  margin: -1px;
+  color: #FF0000;
+  /*text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+  background: #6dafbf;*/
+  border: 1px solid #598b94;
+}
+.cal td.active:first-child a, .cal td:first-child a:active {
+  border-left: 0;
+  margin-left: 0;
+}
+.cal td.active:last-child a, .cal td:last-child a:active {
+  border-right: 0;
+  margin-right: 0;
+}
+.cal tr:last-child td.active a, .cal tr:last-child td a:active {
+  border-bottom: 0;
+  margin-bottom: 0;
+}
