@@ -81,7 +81,7 @@ function fillCalendar(){
 	document.getElementById("calendar-month").innerHTML=monthName[monthNum-1] + " " + (dtmp.getYear()+1900).toString();
 	var firstDayTime = new Date(monthNum.toString()+".01." + (1900+dtmp.getYear()).toString() + " 08:00:00");
 	var cycleOffset = (((firstDayTime.getTime() - workOffset) % cycleMS)+1)%4;
-	var firstDayNum = firstDayTime.getDay();
+	var firstDayNum = (firstDayTime.getDay()==0) ? 7 : firstDayTime.getDay();
 	var calendarHTML = "";
 	/*var prevMonth;
 	if(monthNum==1) {
