@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="css/buttons.css">
 <link rel="stylesheet" href="css/showcase.css">
 <link href="css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" href="css/calendar.css">
 </head>
 <body>
 
@@ -22,6 +23,203 @@ var remHours;
 var remMinutes;
 var remSeconds;
 
+var monthName = ["Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"];
+var monthDays = [31,28,31,30,31,30,31,31,30,31,30,31]; // todo 29th february
+var monthNum;
+
+var calendarMonth = ((new Date()).getMonth()+1);
+var calendarYear = ((new Date()).getYear()+1900);
+var calendarDay = ((new Date()).getDate());
+
+var calendarMonthState=0;
+
+function fillNextMonth(){
+	calendarMonth++;
+	if(calendarMonth>12) {
+		calendarMonth = 1;
+		calendarYear++;
+	}
+	if((calendarMonth==((new Date()).getMonth()+1)) && ((calendarYear-1900) == ((new Date()).getYear()))) {
+		calendarMonthState=0;
+	}
+	else {
+		if (((calendarMonth>((new Date()).getMonth()+1)) && ((calendarYear-1900) == ((new Date()).getYear()))) || ((calendarYear-1900) > ((new Date()).getYear()))) {
+		calendarMonthState=1;
+	}
+		else {
+			calendarMonthState=-1;
+		}
+}
+	fillCalendar();
+}
+
+function fillPrevMonth(){
+	calendarMonth--;
+	if(calendarMonth<1) {
+		calendarMonth = 12;
+		calendarYear--;
+	}
+	if((calendarMonth==((new Date()).getMonth()+1)) && ((calendarYear-1900) == ((new Date()).getYear()))) {
+		calendarMonthState=0;
+	}
+	else {
+		if (((calendarMonth>((new Date()).getMonth()+1)) && ((calendarYear-1900) == ((new Date()).getYear()))) || ((calendarYear-1900) > ((new Date()).getYear()))) {
+		calendarMonthState=1;
+	}
+		else {
+			calendarMonthState=-1;
+		}
+}
+	fillCalendar();
+}
+
+function fillCalendar(){
+	var dtmp = new Date(calendarMonth.toString()+"." + calendarDay.toString() + "." + calendarYear.toString() + " 08:00:00");
+	var calendarSection = document.getElementById("calendar-dates");
+	var addedElements = 0;
+	monthNum=dtmp.getMonth()+1;
+	document.getElementById("calendar-month").innerHTML=monthName[monthNum-1] + " " + (dtmp.getYear()+1900).toString();
+	var firstDayTime = new Date(monthNum.toString()+".01." + (1900+dtmp.getYear()).toString() + " 08:00:00");
+	var cycleOffset = (((firstDayTime.getTime() - workOffset) % cycleMS)+1)%4;
+	var firstDayNum = firstDayTime.getDay();
+	var calendarHTML = "";
+	/*var prevMonth;
+	if(monthNum==1) {
+		prevMonth = 12;
+	}
+	else {
+		prevMonth = monthNum-1;
+	}*/ // we're not writing prev month dates anyway
+
+	calendarHTML="<tr>\n";
+	if(calendarMonthState==0)
+	{
+	for(var i = 1;i < firstDayNum; i++) {
+		if((i-2)%4==cycleOffset){
+			calendarHTML+="<td class=\"off buhaem\"><a><br></a></td>\n";
+		}
+		else {
+			calendarHTML+="<td class=\"off\"><a><br></a></td>\n";
+		}
+		addedElements++;
+	}
+	for(var i = 1; i < dtmp.getDate(); i++) {
+		if((i-2)%4==cycleOffset){
+			calendarHTML+="<td class=\"off buhaem\"><a>" + i.toString() + "</a></td>\n";
+		}
+		else {
+			calendarHTML+="<td class=\"off\"><a>" + i.toString() + "</a></td>\n";
+		}
+		addedElements++;
+		if((addedElements%7)==0) {
+			calendarHTML+="</tr>\n<tr>";
+		}
+	}
+
+	if((i-2)%4==cycleOffset){
+		calendarHTML+="<td class=\"active buhaem\"><a>" + dtmp.getDate().toString() + "</a></td>\n";
+	}
+	else {
+		calendarHTML+="<td class=\"active\"><a>" + dtmp.getDate().toString() + "</a></td>\n";
+	}
+
+	addedElements++;
+	if((addedElements%7)==0) {
+		calendarHTML+="</tr>\n<tr>";
+	}
+
+	for(var i = dtmp.getDate()+1; i <= monthDays[monthNum-1]; i++) {
+		if((i-2)%4==cycleOffset){
+			calendarHTML+="<td class=\"buhaem\"><a>" + i.toString()+"</a></td>\n";
+		}
+		else {
+			calendarHTML+="<td><a>" + i.toString()+"</a></td>\n";
+		}
+
+		addedElements++;
+		if((addedElements%7)==0){
+			calendarHTML+="</tr>\n<tr>\n";
+		}
+	}
+	while((addedElements%7)!=0) {
+		calendarHTML+="<td class=\"off\"><a><br></a></td>\n";
+		addedElements++;
+	}
+}
+	if(calendarMonthState==1)
+	{
+		for(var i = 1;i < firstDayNum; i++) {
+			if((i-2)%4==cycleOffset){
+				calendarHTML+="<td class=\"off buhaem\"><a><br></a></td>\n";
+			}
+			else {
+				calendarHTML+="<td class=\"off\"><a><br></a></td>\n";
+			}
+			addedElements++;
+		}
+
+		for(var i = 1; i <= monthDays[monthNum-1]; i++) {
+			if((i-2)%4==cycleOffset){
+				calendarHTML+="<td class=\"buhaem\"><a>" + i.toString()+"</a></td>\n";
+			}
+			else {
+				calendarHTML+="<td><a>" + i.toString()+"</a></td>\n";
+			}
+
+			addedElements++;
+			if((addedElements%7)==0){
+				calendarHTML+="</tr>\n<tr>\n";
+			}
+		}
+
+		while((addedElements%7)!=0) {
+			calendarHTML+="<td class=\"off\"><a><br></a></td>\n";
+			addedElements++;
+		}
+
+
+		while((addedElements%7)!=0) {
+			calendarHTML+="<td class=\"off\"><a><br></a></td>\n";
+			addedElements++;
+		}
+	}
+
+	if(calendarMonthState==-1)
+	{
+		for(var i = 1;i < firstDayNum; i++) {
+			if((i-2)%4==cycleOffset){
+				calendarHTML+="<td class=\"off buhaem\"><a><br></a></td>\n";
+			}
+			else {
+				calendarHTML+="<td class=\"off\"><a><br></a></td>\n";
+			}
+			addedElements++;
+		}
+
+		for(var i = 1; i <= monthDays[monthNum-1]; i++) {
+			if((i-2)%4==cycleOffset){
+				calendarHTML+="<td class=\"off buhaem\"><a>" + i.toString()+"</a></td>\n";
+			}
+			else {
+				calendarHTML+="<td class=\"off\"><a>" + i.toString()+"</a></td>\n";
+			}
+
+			addedElements++;
+			if((addedElements%7)==0){
+				calendarHTML+="</tr>\n<tr>\n";
+			}
+		}
+
+		while((addedElements%7)!=0) {
+			calendarHTML+="<td class=\"off\"><a><br></a></td>\n";
+			addedElements++;
+		}
+	}
+
+	calendarHTML+="</tr>\n";
+	calendarSection.innerHTML=calendarHTML;
+	document.getElementById("calendar-section").style.display='block';
+}
 
 function getRemainingTime(){
 	var dtmp = new Date();
@@ -55,7 +253,7 @@ function getVovanStatus(){
     	vovanStatus = 2;
     	}
         else {
-        	if(hoursSinceCycleStart>=36 && hoursSinceCycleStart < 48){ 
+        	if(hoursSinceCycleStart>=36 && hoursSinceCycleStart < 48){
             vovanStatus = 3;
             }
             else {
@@ -63,7 +261,7 @@ function getVovanStatus(){
             }
         }
     }
-    
+
 }
 
 function showVovanStatus(){
@@ -79,7 +277,7 @@ function showVovanStatus(){
         getTimeButton.classList.add("button-action");
         getTimeButton.innerHTML="Узнай, когда вован вернется ( ͡° ͜ʖ ͡°)";
         break;
-        
+
         case 2:
         title.style.color = "green";
         title.innerHTML = "Вован сейчас не на работе";
@@ -93,7 +291,7 @@ function showVovanStatus(){
         getTimeButton.classList.add("button-caution");
         getTimeButton.innerHTML="Узнай, когда вован работизируется ( ︶︿︶)";
         break;
-        
+
         case 3:
         title.style.color = "red";
         title.innerHTML = "Вован сейчас на работе";
@@ -102,8 +300,8 @@ function showVovanStatus(){
         getTimeButton.classList.add("button-action");
         getTimeButton.innerHTML="Узнай, когда вован вернется ( ͡° ͜ʖ ͡°)";
         break;
-        
-        
+
+
         case 4:
         title.style.color = "green";
         title.innerHTML = "Вован сейчас не на работе";
@@ -113,11 +311,11 @@ function showVovanStatus(){
         else {
         	subTitle.innerHTML = "часы уже тревожно тикают";
         }
-        getTimeButton.classList.remove("button-caution");
-        getTimeButton.classList.add("button-action");
+				getTimeButton.classList.remove("button-action");
+        getTimeButton.classList.add("button-caution");
         getTimeButton.innerHTML="Узнай, когда вован работизируется ( ︶︿︶)";
         break;
-        
+
         default:
         title.style.color = "gray";
         title.innerHTML = "Вован сейчас в неопределенном состоянии";
@@ -143,18 +341,18 @@ function timer(){
  else{
  	obj.innerHTML="Вован станет работягой через ";
  }
- 
+
  if(h==0 && m==0 && s==0){alert('Вован вернулся!');setTimeout(function(){},1000);getVovanStatus(); showVovanStatus();}
  else{
- 
- if(h!=0) {obj.innerHTML+=h.toString(); if(h==1){ obj.innerHTML+=" час ";} else if((h%10)>1 && (h%10)<5) {obj.innerHTML+=" часа ";} else { obj.innerHTML+=" часов ";}}
- 
- if(m!=0) {obj.innerHTML+=m.toString() ; if((m%10)==1){ obj.innerHTML+=" минуту ";} else if((m%10)>1 && (m%10)<5 && (m<11 || m > 14)) {obj.innerHTML+=" минуты ";} else { obj.innerHTML+=" минут ";}}
- 
+
+ if(h!=0) {obj.innerHTML+=h.toString(); if((h%10)==1){ obj.innerHTML+=" час ";} else if((h%10)>1 && (h%10)<5) {obj.innerHTML+=" часа ";} else { obj.innerHTML+=" часов ";}}
+
+ if(m!=0) {obj.innerHTML+=m.toString() ; if((m%10)==1){ obj.innerHTML+=" минуту ";} else if((m%10)>1 && (m%10)<5 && (m<=10 || m > 14)) {obj.innerHTML+=" минуты ";} else { obj.innerHTML+=" минут ";}}
+
  obj.innerHTML+=s.toString();
- if((s%10)==1){ obj.innerHTML+=" секунду ";} else if((s%10)>1 && (s%10)<5 && (s<11 || s > 14)) {obj.innerHTML+=" секунды ";} else { obj.innerHTML+=" секунд ";}
- 
- 
+ if((s%10)==1){ obj.innerHTML+=" секунду ";} else if((s%10)>1 && (s%10)<5 && (s<=10 || s > 14)) {obj.innerHTML+=" секунды ";} else { obj.innerHTML+=" секунд ";}
+
+
  setTimeout(timer,1000);
  }
 }
@@ -162,6 +360,7 @@ function timer(){
 document.addEventListener("DOMContentLoaded", function() {
     getVovanStatus();
     showVovanStatus();
+		//fillCalendar();
 });
 
 //setTimeout(timer,1000);
@@ -176,10 +375,44 @@ document.addEventListener("DOMContentLoaded", function() {
 <button type="button"
 onclick="setTimeout(timer,0);" class="button button-action button-jumbo" id="timeButton">Узнай, когда вован вернется ( ͡° ͜ʖ ͡°)</button>
 
-<p id="demo" class="showcase-sub-title"><div id="timer_inp"></div></p>
+<h4 id="demo" class="showcase-sub-title"><br><div id="timer_inp"></div></h4>
+
+<button type="button"
+onclick="fillCalendar();" class="button button-action button-jumbo" id="calendarButton" style="height: 120px">~(˘▾˘~) Работа - это, конечно, хорошо, <br>но иногда можно и <del>забухать</del> отдохнуть (¬‿¬)</button>
+
 </header>
+</section>
+
+<section id="calendar-section" class="container" style="display: none;">
+	<table class="cal">
+		<caption>
+			<span class="prev"><a><button style="background-color: #4cb0f9;
+			background: transparent;
+	border: 5px solid transparent;
+	color: black; cursor: pointer;" onclick="fillPrevMonth();">&larr;</button></a></span>
+			<span class="next"><a><button style="background-color: #4cb0f9;
+			background: transparent;
+	border: 5px solid transparent;
+	color: black; cursor: pointer;" onclick="fillNextMonth();">&rarr;</button></a></span>
+			<div id="calendar-month"></div>
+		</caption>
+		<thead>
+			<tr>
+				<th>Пн</th>
+				<th>Вт</th>
+				<th>Ср</th>
+				<th>Чт</th>
+				<th>Пт</th>
+				<th>Сб</th>
+				<th>Вс</th>
+			</tr>
+		</thead>
+		<tbody id="calendar-dates">
+
+		</tbody>
+	</table>
 
 </section>
 
 </body>
-</html> 
+</html>
