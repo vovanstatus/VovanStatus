@@ -150,7 +150,7 @@ body {
 }
 
 .cal td.off a {
-  
+
   color: #b3b3b3;
   opacity: 0.3;
 }
@@ -159,7 +159,11 @@ body {
  background-color: #52ee11;
 }
 
-.cal td.off a:hover, .cal td.buhaem a:hover {
+.cal td.buhaemnedolgo a {
+ background-color: #fff000;
+}
+
+.cal td.off a:hover, .cal td.buhaem a:hover, .cal td.buhaemnedolgo {
    background-color: orange;
 }
 
