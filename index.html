@@ -100,7 +100,7 @@ function fillCalendar(){
 		addedElements++;
 	}
 	for(var i = 1; i < dtmp.getDate(); i++) {
-		if((i-2)%4==cycleOffset){
+		if((i+2)%4==cycleOffset){
 			calendarHTML+="<td class=\"off buhaem\"><a>" + i.toString() + "</a></td>\n";
 		}
 		else {
@@ -117,7 +117,7 @@ function fillCalendar(){
 		}
 	}
 
-	if((i-2)%4==cycleOffset){
+	if((i+2)%4==cycleOffset){
 		calendarHTML+="<td class=\"active buhaem\"><a>" + dtmp.getDate().toString() + "</a></td>\n";
 	}
 	else {
@@ -135,7 +135,7 @@ function fillCalendar(){
 	}
 
 	for(var i = dtmp.getDate()+1; i <= monthDays[monthNum-1]; i++) {
-		if((i-2)%4==cycleOffset){
+		if((i+2)%4==cycleOffset){
 			calendarHTML+="<td class=\"buhaem\"><a>" + i.toString()+"</a></td>\n";
 		}
 		else {
@@ -164,7 +164,7 @@ function fillCalendar(){
 		}
 
 		for(var i = 1; i <= monthDays[monthNum-1]; i++) {
-			if((i-2)%4==cycleOffset){
+			if((i+2)%4==cycleOffset){
 				calendarHTML+="<td class=\"buhaem\"><a>" + i.toString()+"</a></td>\n";
 			}
 			else {
@@ -195,7 +195,7 @@ function fillCalendar(){
 		}
 
 		for(var i = 1; i <= monthDays[monthNum-1]; i++) {
-			if((i-2)%4==cycleOffset){
+			if((i+2)%4==cycleOffset){
 				calendarHTML+="<td class=\"off buhaem\"><a>" + i.toString()+"</a></td>\n";
 			}
 			else {
