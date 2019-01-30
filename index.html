@@ -63,7 +63,7 @@ function fillPrevMonth(){
 		calendarMonthState=0;
 	}
 	else {
-		if (((calendarMonth>((new Date()).getMonth()+1)) && ((calendarYear-1900) == ((new Date()).getYear()))) || ((calendarYear-1900) > ((new Date()).getYear()))) {
+		if (((calendarMonth>((new Date()).getMonth()+1)) && ((calendarYear-1900) >= ((new Date()).getYear())))) {
 		calendarMonthState=1;
 	}
 		else {
@@ -74,7 +74,7 @@ function fillPrevMonth(){
 }
 
 function fillCalendar(){
-	var dtmp = new Date(calendarMonth.toString()+"." + calendarDay.toString() + "." + calendarYear.toString() + " 08:00:00");
+	var dtmp = new Date(calendarMonth.toString()+"." + (calendarMonthState != 0 ? "01" : calendarDay.toString()) + "." + calendarYear.toString() + " 08:00:00");
 	var calendarSection = document.getElementById("calendar-dates");
 	var addedElements = 0;
 	monthNum=dtmp.getMonth()+1;
