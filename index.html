@@ -2,8 +2,10 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Вспомнить где Вован</title>
-<meta name="description" content="Узнай, не отвлечешь ли ты Вову от работы, когда будешь набирать ему следующий раз!">
+<!--<title>Вспомнить где Вован</title>-->
+<title>Тягочайшее ожидание</title>
+<!--<meta name="description" content="Узнай, не отвлечешь ли ты Вову от работы, когда будешь набирать ему следующий раз!">-->
+<meta name="description" content="Узнай, не пропустил ли ты величайшую тусу!">
 <meta name="author" content="Roman">
 <link rel="stylesheet" href="css/animate.min.css">
 <link rel="stylesheet" href="css/buttons.css">
@@ -32,6 +34,18 @@ var calendarYear = ((new Date()).getYear()+1900);
 var calendarDay = ((new Date()).getDate());
 
 var calendarMonthState=0;
+
+// Viktor status
+
+var viktorChallengeStartDate = new Date("2020-03-05");
+var viktorChallengeEndDate = new Date("2021-01-01");
+var viktorTimeLeftState=0;
+var viktorStatDaysLeft = "Много";
+var viktorStatDaysPassed = "Неизвестный";
+
+function millisToDays(millis){
+ return (millis/1000/60/60/24);
+}
 
 function fillNextMonth(){
 	calendarMonth++;
@@ -325,6 +339,29 @@ function showVovanStatus(){
     }
 }
 
+function showWastedVovanStatus(){
+    document.getElementById('vovansDestiny').hidden = false;
+}
+
+function getViktorStatus(){
+    //viktorChallengeStartDate = "2020-03-05";
+    //viktorChallengeEndDate = "2021-01-01";
+    var curDate = new Date();
+    viktorStatDaysLeft = Math.floor(millisToDays(viktorChallengeEndDate - curDate));
+    viktorStatDaysPassed = Math.floor(millisToDays(curDate - viktorChallengeStartDate));
+}
+
+function showViktorStatus(){
+    var statPassed = document.getElementById('viktorStatPassed');
+    var statLeft = document.getElementById('viktorStatLeft');
+    var statComment = document.getElementById('viktorStatComment');
+    var maxDays = Math.abs(Math.floor(millisToDays(viktorChallengeEndDate - viktorChallengeStartDate)));
+    statPassed.innerHTML = viktorStatDaysPassed.toString() + "-й день ожидания свадьбы виктора";
+    statPassed.style.color = "rgb(" + (80 + (viktorStatDaysPassed/maxDays) * (230 - 80)) + "," + (160 - (viktorStatDaysPassed/maxDays) * (120)) + "," + 0 + ")";
+    statLeft.innerHTML = "осталось не больше " + viktorStatDaysLeft.toString() + " (ง ͡ʘ ͜ʖ ͡ʘ)ง";
+    statComment.innerHTML = "Верим. Любим. Следим";
+}
+
 function timer(){
 
  //var d = new Date();
@@ -362,6 +399,8 @@ function timer(){
 document.addEventListener("DOMContentLoaded", function() {
     getVovanStatus();
     showVovanStatus();
+    getViktorStatus();
+    showViktorStatus();
 		//fillCalendar();
 });
 
@@ -372,15 +411,29 @@ document.addEventListener("DOMContentLoaded", function() {
 
 <section id="buttons-3d" class="showcase showcase-content background-light">
 <header class="l-center">
-<h3 class="showcase-title" style="color: #FF0000" id="vovanStat">Вован сейчас на работе</h3>
-<h4 class="showcase-sub-title" id="vovanStatComment">и у него -100% зарплаты</h4>
+
+<h3 class="showcase-title" style="color: #FF0000" id="viktorStatPassed">Неизвестный день ожидания свадьбы Виктора</h3>
+<h3 class="showcase-sub-title" id="viktorStatLeft" style="margin-bottom: 10px; margin-top: 5px; color: #1070A0; font-size: 13pt">осталось</h3>
+<h3 class="showcase-sub-title" id="viktorStatComment">Верим. Любим. Следим</h3>
+
 <button type="button"
-onclick="setTimeout(timer,0);" class="button button-action button-jumbo" id="timeButton">Узнай, когда вован вернется ( ͡° ͜ʖ ͡°)</button>
+onclick="showWastedVovanStatus();" class="button button-action button-jumbo" id="vovanWastedButton">Но я пришел сюда узнать где Вован ( ͡° ͜ʖ ͡°)</button>
+
+<h3 id="vovansDestiny" hidden><div class="showcase-title" style="color: #FF0000; margin-top: 10px">Вован сгнил</div><div class="showcase-sub-title">Заржавел и валяется где-то на помойке в Рязани. Забейте.</div></h3>
+<h4/>
+
+<!--<button type="button"
+onclick="fillCalendar();" class="button button-action button-jumbo" id="calendarButton" style="height: 120px">~(˘▾˘~) Работа - это, конечно, хорошо, <br>но иногда можно и <del>забухать</del> отдохнуть (¬‿¬)</button>-->
+
+<h3 class="showcase-title" style="color: #FF0000" id="vovanStat" hidden>Вован сейчас на работе</h3>
+<h4 class="showcase-sub-title" id="vovanStatComment" hidden>и у него -100% зарплаты</h4>
+<button type="button"
+onclick="setTimeout(timer,0);" class="button button-action button-jumbo" id="timeButton" hidden>Узнай, когда вован вернется ( ͡° ͜ʖ ͡°)</button>
 
 <h4 id="demo" class="showcase-sub-title"><br><div id="timer_inp"></div></h4>
 
 <button type="button"
-onclick="fillCalendar();" class="button button-action button-jumbo" id="calendarButton" style="height: 120px">~(˘▾˘~) Работа - это, конечно, хорошо, <br>но иногда можно и <del>забухать</del> отдохнуть (¬‿¬)</button>
+onclick="fillCalendar();" class="button button-action button-jumbo" id="calendarButton" style="height: 120px" hidden>~(˘▾˘~) Работа - это, конечно, хорошо, <br>но иногда можно и <del>забухать</del> отдохнуть (¬‿¬)</button>
 
 </header>
 </section>
