@@ -16,6 +16,9 @@
 <body>
 
 <script type="text/javascript">
+
+var switcher = 0;
+	
 var workOffset = 190800000;
 var cycleMS = 4*24*60*60*1000;
 var vovanStatus;
@@ -47,6 +50,44 @@ function millisToDays(millis){
  return (millis/1000/60/60/24);
 }
 
+function switchStatuses(){
+	switch (switcher)
+		case 0:
+		switcher = 1;
+		switchStatusButton.innerHTML = "НЕ, НАЗАД"
+		switchToVovanStatus();
+		break;
+		case 1:
+		switcher = 0;
+		switchStatusButton.innerHTML = "НЕ ТОТ ЧЕЛ";
+		switchToViktorStatus();
+		break;
+		default:
+		break;
+}
+
+function switchToVovanStatus(){
+	vovanStat.hidden = false;
+	vovanStatComment.hidden = false;
+	timeButton.hidden = false;
+	calendarButton.hidden = false;
+		
+	viktorStatComment.hidden = true;
+	viktorStatLeft.hidden = true;
+	viktorStatPassed.hidden = true;
+}
+	
+function switchToViktorStatus(){
+	vovanStat.hidden = true;
+	vovanStatComment.hidden = true;
+	timeButton.hidden = true;
+	calendarButton.hidden = true;
+		
+	viktorStatComment.hidden = false;
+	viktorStatLeft.hidden = false;
+	viktorStatPassed.hidden = false;
+}
+	
 function fillNextMonth(){
 	calendarMonth++;
 	if(calendarMonth>12) {
@@ -407,7 +448,8 @@ document.addEventListener("DOMContentLoaded", function() {
 //setTimeout(timer,1000);
 </script>
 
-
+<button type="button"
+onclick="switchStatuses();" class="button button-action button-jumbo" id="switchStatusButton">НЕ ТОТ ЧЕЛ</button>
 
 <section id="buttons-3d" class="showcase showcase-content background-light">
 <header class="l-center">
@@ -416,11 +458,11 @@ document.addEventListener("DOMContentLoaded", function() {
 <h3 class="showcase-sub-title" id="viktorStatLeft" style="margin-bottom: 10px; margin-top: 5px; color: #1070A0; font-size: 13pt">осталось</h3>
 <h3 class="showcase-sub-title" id="viktorStatComment">Верим. Любим. Следим</h3>
 
-<button type="button"
-onclick="showWastedVovanStatus();" class="button button-action button-jumbo" id="vovanWastedButton">Но я пришел сюда узнать где Вован ( ͡° ͜ʖ ͡°)</button>
+<!--<button type="button"
+onclick="showWastedVovanStatus();" class="button button-action button-jumbo" id="vovanWastedButton">Но я пришел сюда узнать где Вован ( ͡° ͜ʖ ͡°)</button>-->
 
-<h3 id="vovansDestiny" hidden><div class="showcase-title" style="color: #FF0000; margin-top: 10px">Вован сгнил</div><div class="showcase-sub-title">Заржавел и валяется где-то на помойке в Рязани. Забейте.</div></h3>
-<h4/>
+<!--<h3 id="vovansDestiny" hidden><div class="showcase-title" style="color: #FF0000; margin-top: 10px">Вован сгнил</div><div class="showcase-sub-title">Заржавел и валяется где-то на помойке в Рязани. Забейте.</div></h3>-->
+<!--<h4/>-->
 
 <!--<button type="button"
 onclick="fillCalendar();" class="button button-action button-jumbo" id="calendarButton" style="height: 120px">~(˘▾˘~) Работа - это, конечно, хорошо, <br>но иногда можно и <del>забухать</del> отдохнуть (¬‿¬)</button>-->
