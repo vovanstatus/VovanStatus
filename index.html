@@ -52,6 +52,7 @@ function millisToDays(millis){
 
 function switchStatuses(){
 	switch (switcher)
+	{
 		case 0:
 		switcher = 1;
 		switchStatusButton.innerHTML = "НЕ, НАЗАД"
@@ -64,6 +65,7 @@ function switchStatuses(){
 		break;
 		default:
 		break;
+	}
 }
 
 function switchToVovanStatus(){
@@ -448,11 +450,11 @@ document.addEventListener("DOMContentLoaded", function() {
 //setTimeout(timer,1000);
 </script>
 
-<button type="button"
-onclick="switchStatuses();" class="button button-action button-jumbo" id="switchStatusButton">НЕ ТОТ ЧЕЛ</button>
-
 <section id="buttons-3d" class="showcase showcase-content background-light">
 <header class="l-center">
+
+<button type="button"
+onclick="switchStatuses();" class="button button-action button-jumbo" id="switchStatusButton">НЕ ТОТ ЧЕЛ</button>
 
 <h3 class="showcase-title" style="color: #FF0000" id="viktorStatPassed">Неизвестный день ожидания свадьбы Виктора</h3>
 <h3 class="showcase-sub-title" id="viktorStatLeft" style="margin-bottom: 10px; margin-top: 5px; color: #1070A0; font-size: 13pt">осталось</h3>
