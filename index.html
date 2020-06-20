@@ -35,6 +35,8 @@ var monthNum;
 var calendarMonth = ((new Date()).getMonth()+1);
 var calendarYear = ((new Date()).getYear()+1900);
 var calendarDay = ((new Date()).getDate());
+var vovanVrStartDate = new Date("2020-06-08");
+var vovanVrEndDate = new Date("2020-09-08"); 
 
 var calendarMonthState=0;
 
@@ -301,6 +303,34 @@ function getRemainingTime(){
     remSeconds = 59 - dtmp.getSeconds();
 }
 
+function getVovanVrInfoDaysLeft(){
+  return Math.floor((vovanVrEndDate - new Date()) / (1000 * 60 * 60 * 24));
+}
+
+function getVovanVrInfo(){
+    var vrInfo = document.getElementById('vovanVrInfo');
+    var daysLeft = getVovanVrInfoDaysLeft();
+    if (daysLeft > 0)
+    {
+      var dayStr = "дней";
+      if (daysLeft%10 == 1)
+      {
+        dayStr = "день";
+      }
+      else if (daysLeft%10 > 1 && daysLeft%10 < 5)
+      {
+        dayStr = "дня";
+      }
+      vrInfo.innerHTML = "Виар (или даже два!) будет доступен не позже чем через" + " " + daysLeft + " " + dayStr + " o(≧∇≦o)";
+      vrInfo.hidden = false
+    }
+    else
+    {
+      vrInfo.innerHTML = "Никогда. Водка это любовь. Водка это жизнь."
+      vrInfo.hidden = false
+    }
+}
+
 function getVovanStatus(){
 	hoursSinceCycleStart = (((new Date()) - workOffset)%cycleMS)/1000/60/60;
 	hoursSinceCycleStart = Math.floor(hoursSinceCycleStart);
@@ -382,6 +412,18 @@ function showVovanStatus(){
     }
 }
 
+function showWastedViktorStatus(){
+    if (document.getElementById('viktorwastedinfo').hidden != false)
+    {
+      document.getElementById('viktorwastedinfo').hidden = false;
+    }
+    else
+    {
+      document.getElementById('viktorWastedInfoAdditional').innerHTML = "_へ__(‾◡◝ )> но самую малость можно побыть и викторстатусом:";
+      document.getElementById('viktorwedding').style = "padding-top: 0px; padding-bottom: 0px"; // TODO: hidden, just like everywhere
+    }
+}
+
 function showWastedVovanStatus(){
     document.getElementById('vovansDestiny').hidden = false;
 }
@@ -453,34 +495,30 @@ document.addEventListener("DOMContentLoaded", function() {
 <section id="buttons-3d" class="showcase showcase-content background-light">
 <header class="l-center">
 
-<button type="button"
-onclick="switchStatuses();" class="button button-action button-jumbo" id="switchStatusButton">НЕ ТОТ ЧЕЛ</button>
-
-<h3 class="showcase-title" style="color: #FF0000" id="viktorStatPassed">Неизвестный день ожидания свадьбы Виктора</h3>
-<h3 class="showcase-sub-title" id="viktorStatLeft" style="margin-bottom: 10px; margin-top: 5px; color: #1070A0; font-size: 13pt">осталось</h3>
-<h3 class="showcase-sub-title" id="viktorStatComment">Верим. Любим. Следим</h3>
-
 <!--<button type="button"
-onclick="showWastedVovanStatus();" class="button button-action button-jumbo" id="vovanWastedButton">Но я пришел сюда узнать где Вован ( ͡° ͜ʖ ͡°)</button>-->
+onclick="switchStatuses();" class="button button-action button-jumbo" id="switchStatusButton">НЕ ТОТ ЧЕЛ</button>-->
 
-<!--<h3 id="vovansDestiny" hidden><div class="showcase-title" style="color: #FF0000; margin-top: 10px">Вован сгнил</div><div class="showcase-sub-title">Заржавел и валяется где-то на помойке в Рязани. Забейте.</div></h3>-->
-<!--<h4/>-->
+<!--
+<button type="button"
+onclick="showWastedVovanStatus();" class="button button-action button-jumbo" id="vovanWastedButton">Но я пришел сюда узнать где Вован ( ͡° ͜ʖ ͡°)</button>
+
+<h3 id="vovansDestiny" hidden><div class="showcase-title" style="color: #FF0000; margin-top: 10px">Вован сгнил</div><div class="showcase-sub-title">Заржавел и валяется где-то на помойке в Рязани. Забейте.</div></h3>
+<h4/>
+-->
 
 <!--<button type="button"
 onclick="fillCalendar();" class="button button-action button-jumbo" id="calendarButton" style="height: 120px">~(˘▾˘~) Работа - это, конечно, хорошо, <br>но иногда можно и <del>забухать</del> отдохнуть (¬‿¬)</button>-->
 
-<h3 class="showcase-title" style="color: #FF0000" id="vovanStat" hidden>Вован сейчас на работе</h3>
-<h4 class="showcase-sub-title" id="vovanStatComment" hidden>и у него -100% зарплаты</h4>
+<h3 class="showcase-title" style="color: #FF0000" id="vovanStat">Вован сейчас на работе</h3>
+<h4 class="showcase-sub-title" id="vovanStatComment">и у него -100% зарплаты</h4>
 <button type="button"
-onclick="setTimeout(timer,0);" class="button button-action button-jumbo" id="timeButton" hidden>Узнай, когда вован вернется ( ͡° ͜ʖ ͡°)</button>
+onclick="setTimeout(timer,0);" class="button button-action button-jumbo" id="timeButton">Узнай, когда вован вернется ( ͡° ͜ʖ ͡°)</button>
 
 <h4 id="demo" class="showcase-sub-title"><br><div id="timer_inp"></div></h4>
 
 <button type="button"
-onclick="fillCalendar();" class="button button-action button-jumbo" id="calendarButton" style="height: 120px" hidden>~(˘▾˘~) Работа - это, конечно, хорошо, <br>но иногда можно и <del>забухать</del> отдохнуть (¬‿¬)</button>
+onclick="fillCalendar();" class="button button-action button-jumbo" id="calendarButton" style="height: 120px">~(˘▾˘~) Работа - это, конечно, хорошо, <br>но иногда можно и <del>забухать</del> отдохнуть (¬‿¬)</button>
 
-</header>
-</section>
 
 <section id="calendar-section" class="container" style="display: none;">
 	<table class="cal">
@@ -511,6 +549,35 @@ onclick="fillCalendar();" class="button button-action button-jumbo" id="calendar
 		</tbody>
 	</table>
 
+</section>
+
+
+<h4><br><br></h4>
+<!--<section>-->
+<button type="button"
+onclick="getVovanVrInfo();" class="button button-action button-jumbo" id="vovanVrButton">Узнай, когда Вован начнет отдыхать в виаре (ﾉ◕ヮ◕)ﾉ</button>
+      <h3 class="showcase-sub-title" id="vovanVrInfo" style="margin-bottom: 10px; margin-top: 5px; font-size: 14pt" hidden>Виар (или даже два!) будет доступен не позже чем через неизвестно сколько дней</h3>
+<!--</section>-->
+
+</header>
+</section>
+
+<section id="viktorstatus">
+  <header class="l-center">
+  <section id="viktorwasted" class="showcase showcase-content background-light">
+    <button type="button"
+    onclick="showWastedViktorStatus();" class="button button-action button-jumbo" style="background-color: lightgrey" id="vovanWastedButton">Стоп, а что с Виктором?</button>
+    <section id="viktorwastedinfo" hidden>
+      <h3 class="showcase-title" style="color: #FF0000" id="viktorWastedInfo" >Балабольнулся</h3>
+      <h3 class="showcase-sub-title" id="viktorWastedInfoAdditional" style="margin-bottom: 10px; margin-top: 5px; font-size: 13pt">ну и тут все же вованстатус, а не викторстатус</h3>
+    </section>
+  </section>
+  <section id="viktorwedding" class="showcase showcase-content background-light" style="display: none;">
+    <h3 class="showcase-title" style="color: #FF0000" id="viktorStatPassed" >Неизвестный день ожидания свадьбы Виктора</h3>
+    <h3 class="showcase-sub-title" id="viktorStatLeft" style="margin-bottom: 10px; margin-top: 5px; color: #1070A0; font-size: 13pt">осталось</h3>
+    <h3 class="showcase-sub-title" id="viktorStatComment" >Верим. Любим. Следим</h3>
+  </section>
+  </header>
 </section>
 
 </body>
