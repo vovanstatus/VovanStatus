@@ -63,26 +63,19 @@ var maxPreFooterTextImageHeightPercentage = 0.070;
 // gen
 class InputAccessor
 {
-	static getShuffledValuesOfInput(id)
+  static getShuffledValuesOfInput(id)
   {
   	return shuffle(InputAccessor.getValuesOfInput(id));
   }
   static getValuesOfInput(id)
   {
-  	if (document.getElementById(id).tagName == "INPUT")
-    {
     	return document.getElementById(id).value.split("\n");
-    }
-    else
-    {
-  		return document.getElementById(id).innerHTML.split("\n");
-    }
   }
 }
 
 class InputGetter
 {
-	static getTitle()
+  static getTitle()
   {
   	return InputAccessor.getValuesOfInput(titleInputElementId);
   }
@@ -134,17 +127,17 @@ class InputGetter
 
 class Coordinates
 {
-	constructor(_x, _y) { this.x = _x; this.y = _y;}
+  constructor(_x, _y) { this.x = _x; this.y = _y;}
 }
 
 class Size
 {
-	constructor(_width, _height) { this.width = _width; this.height = _height; }
+  constructor(_width, _height) { this.width = _width; this.height = _height; }
 }
 
 class CanvasFont
 {
-	constructor(_size = 10, _fontFamily = "serif", _additionalParams = "")
+  constructor(_size = 10, _fontFamily = "serif", _additionalParams = "")
   {
   	this.size = _size >= 0 ? _size : 0;
     this.fontFamily = _fontFamily;
@@ -160,24 +153,17 @@ class CanvasFont
 
 class CanvasText
 {
-	constructor(_lines,
-  						_color,
+  constructor(_lines,
+	      _color,
               _startingPoint,
               _newLineHeightShift,
               _canvasFont)
   {
-  	this.lines = _lines;
+    this.lines = _lines;
     this.color = _color;
     this.startingPoint = _startingPoint;
     this.newLineHeightShift = _newLineHeightShift;
-  	this.font = _canvasFont;
-  	//this.titleFontFamily = "\"Comic Sans MS\"";
-    //this.titleFontSize = 52;
-    //this.titleFontAdditionalParams = "bold"
-    //this.titleLines = ["ШАНС ВЫИГРАТЬ СЛЕДУЮЩИЙ", "ТЕНДЕР"];
-    //this.titleStartingPoint = new Coordinates(60, 110);
-    //this.titleNewLineHeightShift = 52 * 1.1;
-    //this.titleColor = "black";
+    this.font = _canvasFont;
   }
   
   fillIntoCanvasCtx(ctx)
@@ -185,8 +171,6 @@ class CanvasText
   	//save prev
     this.storeCanvasSettings(ctx);
     
-    //ctx.font = this.Font.getCanvasCtxFontString();
-    //ctx.fillStyle = this.titleColor;
     this.setTitleCanvasSettingToContext(ctx);
     
     for (var i = 0; i < this.lines.length; i++)
@@ -208,7 +192,7 @@ class CanvasText
   
   restoreCanvasSettingsToContext(ctx)
   {
-  	ctx.font = this.oldFont != null ? this.oldFont : ctx.font;
+    ctx.font = this.oldFont != null ? this.oldFont : ctx.font;
     ctx.fillStyle = this.oldFillStyle != null ? this.oldFillStyle : ctx.fillStyle;
     this.oldFont = null;
     this.oldFillStyle = null;
@@ -223,50 +207,38 @@ class CanvasText
 
 class TitleText extends CanvasText
 {
-	constructor(_lines,
-  						_color = "black",
+  constructor(_lines,
+  	      _color = "black",
               _startingPoint = new Coordinates(60, 110),
               _newLineHeightShift = 52 * 1.1,
               _canvasFont = new CanvasFont(52, "Comic Sans MS", "bold"))
   {
-  	super(_lines, _color, _startingPoint, _newLineHeightShift, _canvasFont)
-  	//this.lines = _lines;
-    //this.color = _color;
-    //this.startingPoint = _startingPoint;
-    //this.newLineHeightShift = _newLineHeightShift;
-  	//this.font = _canvasFont;
-  	//this.titleFontFamily = "\"Comic Sans MS\"";
-    //this.titleFontSize = 52;
-    //this.titleFontAdditionalParams = "bold"
-    //this.titleLines = ["ШАНС ВЫИГРАТЬ СЛЕДУЮЩИЙ", "ТЕНДЕР"];
-    //this.titleStartingPoint = new Coordinates(60, 110);
-    //this.titleNewLineHeightShift = 52 * 1.1;
-    //this.titleColor = "black";
+    super(_lines, _color, _startingPoint, _newLineHeightShift, _canvasFont)
   }
 }
 
 class BodyText extends CanvasText
 {
-	constructor(_lines,
-  						_textAlign = "center",
-  						_color = "black",
+  constructor(_lines,
+  	      _textAlign = "center",
+  	      _color = "black",
               _startingPoint = new Coordinates(500, 400),
               _newLineHeightShift = 72 * 1.1,
               _canvasFont = new CanvasFont(72, "Segoe UI", "italic"))
   {
-  	super(_lines, _color, _startingPoint, _newLineHeightShift, _canvasFont)
+    super(_lines, _color, _startingPoint, _newLineHeightShift, _canvasFont)
     this.textAlign = _textAlign;
   }
   
   storeCanvasSettings(ctx)
   {
-  	this.oldTextAlign = ctx.textAlign;
+    this.oldTextAlign = ctx.textAlign;
     super.storeCanvasSettings(ctx);
   }
   
   restoreCanvasSettingsToContext(ctx)
   {
-  	ctx.textAlign = this.oldTextAlign;
+    ctx.textAlign = this.oldTextAlign;
     super.restoreCanvasSettingsToContext(ctx);
     this.oldTextAlign = null;
   }
@@ -280,58 +252,46 @@ class BodyText extends CanvasText
 
 class FooterText extends CanvasText
 {
-	constructor(_lines,
-  						_color = "black",
+  constructor(_lines,
+  	      _color = "black",
               _startingPoint = new Coordinates(500, 1010),
               _newLineHeightShift = 30 * 1.1,
               _canvasFont = new CanvasFont(30, "Comic Sans MS"))
   {
-  	super(_lines, _color, _startingPoint, _newLineHeightShift, _canvasFont)
-  	//this.lines = _lines;
-    //this.color = _color;
-    //this.startingPoint = _startingPoint;
-    //this.newLineHeightShift = _newLineHeightShift;
-  	//this.font = _canvasFont;
-  	//this.titleFontFamily = "\"Comic Sans MS\"";
-    //this.titleFontSize = 52;
-    //this.titleFontAdditionalParams = "bold"
-    //this.titleLines = ["ШАНС ВЫИГРАТЬ СЛЕДУЮЩИЙ", "ТЕНДЕР"];
-    //this.titleStartingPoint = new Coordinates(60, 110);
-    //this.titleNewLineHeightShift = 52 * 1.1;
-    //this.titleColor = "black";
+    super(_lines, _color, _startingPoint, _newLineHeightShift, _canvasFont)
   }
 }
 
 class Renderable
 {
-	renderToCanvasCtx(ctx) {}
+  renderToCanvasCtx(ctx) {}
 }
 
 class CanvasTitle extends Renderable
 {
-	constructor(lines, ctx)
+  constructor(lines, ctx)
   {
-  	super();
-  	this.text = new TitleText(lines);
+    super();
+    this.text = new TitleText(lines);
   }
   renderToCanvasCtx(ctx)
   {
-  	this.text.fillIntoCanvasCtx(ctx);
+    this.text.fillIntoCanvasCtx(ctx);
   }
 }
 
 class CanvasBody extends Renderable
 {
-	constructor(lines, ctx)
+  constructor(lines, ctx)
   {
-  	super();
-  	this.text = new BodyText(lines, "center");
+    super();
+    this.text = new BodyText(lines, "center");
     this.text.startingPoint.x = ctx.canvas.width / 2;
     this.text.startingPoint.y = ctx.canvas.height / 2 - ((this.text.lines.length - 1) * this.text.font.size / 2);
   }
   renderToCanvasCtx(ctx)
   {
-  	this.text.fillIntoCanvasCtx(ctx);
+    this.text.fillIntoCanvasCtx(ctx);
   }
 }
 
@@ -339,12 +299,12 @@ class CanvasFooter extends Renderable
 {
 	constructor(lines, ctx, preTextImageSrc = null)
   {
-  	super();
-  	this.text = new FooterText(lines);
+    super();
+    this.text = new FooterText(lines);
     this.preTextImage = null;
     if (preTextImageSrc != null)
     {
-    	this.preTextImage = new Image();
+      this.preTextImage = new Image();
       this.preTextImage.setAttribute('crossorigin', 'anonymous'); 
       this.onload = this.preTextImageLoaded; // doesn't work
       this.preTextImage.src = preTextImageSrc;
@@ -353,14 +313,14 @@ class CanvasFooter extends Renderable
   
   shrinkImage()
   {
-  	if (this.preTextImage == null)
+    if (this.preTextImage == null)
     {
-    	return;
+      return;
     }
-  	if (this.preTextImage.height > maxPreFooterTextImageHeight ||
+    if (this.preTextImage.height > maxPreFooterTextImageHeight ||
     	this.preTextImage.width > maxPreFooterTextImageWidth)
     {
-    	var multiplier = this.preTextImage.height >= this.preTextImage.width ?
+      var multiplier = this.preTextImage.height >= this.preTextImage.width ?
       	maxPreFooterTextImageHeight / this.preTextImage.height :
       	maxPreFooterTextImageWidth / this.preTextImage.width;
       this.preTextImage.height = this.preTextImage.height * multiplier;
@@ -379,8 +339,8 @@ class CanvasFooter extends Renderable
   {
     if (this.preTextImage != null)
     {
-    	this.shrinkImage();
-    	this.text.storeCanvasSettings(ctx);
+      this.shrinkImage();
+      this.text.storeCanvasSettings(ctx);
       this.text.setTitleCanvasSettingToContext(ctx);
       // futureproofing
       var textWidth = 0;
@@ -407,8 +367,8 @@ class CanvasFooter extends Renderable
     else
     {
     	// MOVE TO CTOR!
-    	var storeTextAlign = ctx.textAlign;
-    	ctx.textAlign = "center";
+      var storeTextAlign = ctx.textAlign;
+      ctx.textAlign = "center";
       this.text.startingPoint.x = ctx.canvas.width / 2;
     	this.text.fillIntoCanvasCtx(ctx);
       ctx.textAlign = storeTextAlign;
@@ -418,14 +378,6 @@ class CanvasFooter extends Renderable
 
 function main()
 {
-  //var titleFontFamily = "\"Comic Sans MS\""
-  //var titleFont
-  //var titleLines = ["ШАНС ВЫИГРАТЬ СЛЕДУЮЩИЙ", "ТЕНДЕР"];
-  //var titleStartingPoint = new Coordinates(60, 110);
-  //var titleNewLineHeightShift = 52 * 1.1;
-  //console.log(title);
-  //logDebug(title);
-
   var image = new Image();
   image.setAttribute('crossorigin', 'anonymous'); 
   image.src = InputGetter.getBackgroundImageSrc();
@@ -434,15 +386,6 @@ function main()
   canvas.height = image.height;
   var ctx = canvas.getContext("2d");
   ctx.drawImage(image, 0, 0);
-  //ctx.font = "bold 52px \"Comic Sans MS\"";
-  //ctx.fillRect(0, 0, 100, 100);
-  ctx.font = "48px serif";
-  ctx.fillStyle = "red";
-  //console.log(ctx.measureText("ШАНС ВЫИГРАТЬ СЛЕДУЮЩИЙ ТЕНДЕР"));
-  /*for (var i = 0; i < 2; i++)
-  {
-    ctx.fillText(titleLines[i], titleStartingPoint.x, titleStartingPoint.y + i*titleNewLineHeightShift);
-  }*/
 
   var canvasTitle = new CanvasTitle(InputGetter.getTitle(), ctx);
   var canvasBody = new CanvasBody(InputGetter.getShuffledNameValueStringArray(), ctx);
@@ -450,14 +393,6 @@ function main()
   canvasTitle.renderToCanvasCtx(ctx);
   canvasFooter.renderToCanvasCtx(ctx);
   canvasBody.renderToCanvasCtx(ctx);
-  /*var title = new TitleText(["ШАНС ВЫИГРАТЬ СЛЕДУЮЩИЙ", "ТЕНДЕР"]);
-  var body = new BodyText(["Игорь: 0", "Вован: 1", "Вовик: 2", "Виктор: 3"]);
-  var footer = new FooterText(["@govno_iz_jopi"]);
-
-  title.fillIntoCanvasCtx(ctx);
-  body.fillIntoCanvasCtx(ctx);
-  footer.fillIntoCanvasCtx(ctx);*/
-
 
   var img = document.getElementById(generatedImageElementId);
   if (img == null)
