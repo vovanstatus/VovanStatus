@@ -203,6 +203,10 @@ class CanvasText
     ctx.font = this.font.getCanvasCtxFontString();
     ctx.fillStyle = this.color;
   }
+  setLines(lines)
+  {
+	  this.lines = lines;
+  }
 }
 
 class TitleText extends CanvasText
@@ -221,6 +225,7 @@ class BodyText extends CanvasText
 {
   constructor(_lines,
   	      _textAlign = "center",
+	      _autoAdjustFontSize = true,
   	      _color = "black",
               _startingPoint = new Coordinates(500, 400),
               _newLineHeightShift = 72 * 1.1,
@@ -228,6 +233,9 @@ class BodyText extends CanvasText
   {
     super(_lines, _color, _startingPoint, _newLineHeightShift, _canvasFont)
     this.textAlign = _textAlign;
+    this.autoAdjustFontSize = _autoAdjustFontSize;
+    this.originalFontSize = this.font.size;
+    this.setLines(this.lines);
   }
   
   storeCanvasSettings(ctx)
@@ -247,6 +255,20 @@ class BodyText extends CanvasText
   {
     ctx.textAlign = this.textAlign;
     super.setTitleCanvasSettingToContext(ctx);
+  }
+  setLines(lines, autoAdjustFontSize = this.autoAdjustFontSize)
+  {
+	  var resultLines = [];
+	  for (var i = 0; i < lines.length; i++)
+	  {
+		  resultLines = resultLines.concat(lines[i].split("\\\\"));
+	  }
+	  this.lines = resultLines;
+	  if (autoAdjustFontSize && (resultLines.length > 8)) // TODO use const
+	  {
+		  this.font.size = Math.round(this.originalFontSize * resultLines.length / 8); // TODO: use const
+		  this.newLineHeightShift = this.font.size * 1.1; // TODO: use const
+	  }
   }
 }
 
