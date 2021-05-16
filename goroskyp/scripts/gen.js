@@ -266,7 +266,7 @@ class BodyText extends CanvasText
 	  this.lines = resultLines;
 	  if (autoAdjustFontSize && (resultLines.length > 8)) // TODO use const
 	  {
-		  this.font.size = Math.round(this.originalFontSize * resultLines.length / 8); // TODO: use const
+		  this.font.size = Math.round(this.originalFontSize * 8 / resultLines.length); // TODO: use const
 		  this.newLineHeightShift = this.font.size * 1.1; // TODO: use const
 	  }
   }
