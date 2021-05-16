@@ -356,12 +356,12 @@ class CanvasFooter extends Renderable
       var startingPoints = getCenterAlignedStartPointsForObjectRendering(ctx.canvas.width, [this.preTextImage.width, textWidth]);
       logDebug("Text width: " + startingPoints);
       // draw image
-    	ctx.drawImage(this.preTextImage, startingPoints[0], 1000 - this.preTextImage.height / 2, this.preTextImage.height, this.preTextImage.width);
+      ctx.drawImage(this.preTextImage, startingPoints[0], 1000 - this.preTextImage.height / 2, this.preTextImage.width, this.preTextImage.height);
       // draw text
       var storeTextAlign = ctx.textAlign;
-    	ctx.textAlign = "left";
+      ctx.textAlign = "left";
       this.text.startingPoint.x = startingPoints[1];
-    	this.text.fillIntoCanvasCtx(ctx);
+      this.text.fillIntoCanvasCtx(ctx);
       ctx.textAlign = storeTextAlign;
     }
     else
@@ -370,7 +370,7 @@ class CanvasFooter extends Renderable
       var storeTextAlign = ctx.textAlign;
       ctx.textAlign = "center";
       this.text.startingPoint.x = ctx.canvas.width / 2;
-    	this.text.fillIntoCanvasCtx(ctx);
+      this.text.fillIntoCanvasCtx(ctx);
       ctx.textAlign = storeTextAlign;
     }
   }
