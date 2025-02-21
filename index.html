@@ -457,27 +457,67 @@ function timer(){
  h = remHours;
  m = remMinutes;
  s = remSeconds;
- var obj=document.getElementById('timer_inp');
+ var obj = document.getElementById('timer_inp');
  //obj.innerHTML--;
- if(vovanStatus==1 || vovanStatus==3){
- 	obj.innerHTML="Вован вернется через ";
+ if(vovanStatus == 1 || vovanStatus == 3)
+ {
+ 	obj.innerHTML = "Вован вернется через ";
  }
- else{
- 	obj.innerHTML="Вован станет работягой через ";
+ else
+ {
+ 	obj.innerHTML = "Вован станет работягой через ";
  }
 
- if(h==0 && m==0 && s==0){alert('Вован вернулся!');setTimeout(function(){},1000);getVovanStatus(); showVovanStatus();}
- else{
-
- if(h!=0) {obj.innerHTML+=h.toString(); if((h%10)==1){ obj.innerHTML+=" час ";} else if((h%10)>1 && (h%10)<5) {obj.innerHTML+=" часа ";} else { obj.innerHTML+=" часов ";}}
-
- if(m!=0) {obj.innerHTML+=m.toString() ; if((m%10)==1){ obj.innerHTML+=" минуту ";} else if((m%10)>1 && (m%10)<5 && (m<=10 || m > 14)) {obj.innerHTML+=" минуты ";} else { obj.innerHTML+=" минут ";}}
-
- obj.innerHTML+=s.toString();
- if((s%10)==1){ obj.innerHTML+=" секунду ";} else if((s%10)>1 && (s%10)<5 && (s<=10 || s > 14)) {obj.innerHTML+=" секунды ";} else { obj.innerHTML+=" секунд ";}
-
-
- setTimeout(timer,1000);
+ if(h == 0 && m == 0 && s == 0)
+ {
+	var alertMsg = "";
+	switch(vovanStatus) {
+	case 1:
+		alertMsg = "Вован вернулся! Но ненадолго :(";
+	break;
+	case 3:
+		alertMsg = "Вован вернулся!";
+	break;
+	default:
+		alertMsg = "Вован работизировался :|";
+	}
+	alert(alertMsg);
+	setTimeout(function(){}, 1000);
+	getVovanStatus();
+	showVovanStatus();
+ }
+ else
+ {
+	 if(h != 0)
+	 {
+		 obj.innerHTML += h.toString();
+		 if((h % 10) == 1)
+		 { obj.innerHTML += " час ";}
+		 else if((h % 10) > 1 && (h % 10) < 5)
+		 { obj.innerHTML += " часа ";}
+		 else
+		 { obj.innerHTML += " часов ";}
+	 }
+	 if(m != 0)
+	 {
+		 obj.innerHTML += m.toString();
+		 if((m % 10) == 1)
+		 { obj.innerHTML += " минуту ";}
+		 else if((m % 10) > 1 && (m % 10) < 5 && (m <= 10 || m > 14))
+		 { obj.innerHTML += " минуты ";}
+		 else
+		 { obj.innerHTML += " минут ";}
+	 }
+	
+	 obj.innerHTML += s.toString();
+	 if ((s % 10) == 1)
+	 { obj.innerHTML += " секунду ";}
+	 else if((s % 10) > 1 && (s % 10) < 5 && (s <= 10 || s > 14))
+	 { obj.innerHTML+=" секунды ";}
+	 else
+	 { obj.innerHTML+=" секунд ";}
+	
+	 setTimeout(timer, 1000);
  }
 }
 
